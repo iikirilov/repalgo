@@ -6,6 +6,7 @@ int n;
 
 int * pClass;
 int * pStart;
+int * pGap;
 int * pEnd;
 int * pSize;
 
@@ -14,35 +15,41 @@ int i, j;
 
 void printMemory(){
 	for(i = 0; i < n; ++i){
-		printf("pClass[%d] = %d \tpStart[%d] = %d \tpEnd[%d] = %d \tpSize[%d] = %d\n",i,pClass[i],i,pStart[i],i,pEnd[i],i,pSize[i]);	
+		printf("pClass[%d] = %d \tpStart[%d] = %d \tpEnd[%d] = %d \tpSize[%d] = %d \tpGap[%d] = %d\n",i,pClass[i],i,pStart[i],i,pEnd[i],i,pSize[i],i,pGap[i]);	
 	}
 }
 
-
-void firstRun(char str[]){
-	char lastC = str[0];
-	for(i = 0; i < n; ++i){	
-		if(str[i] == lastC){
-			lastC = str[i];
-			pClass[i] = 0;
-			if(pStart[0] == -1){
-				pStart[0] = i;
-			}
-			pEnd[0] = i;
-			pSize[0] += 1;
-			
-		}else {
-			pClass[i] = 1;
-			if(pStart[1] == -1){
-				pStart[1] = i;
-			}
-			pEnd[1] = i;
-			pSize[1] += 1;
-		}
-		
-	}
-	
-	for(i = 0; i < n; ++i){
+void rep(char str[]){
+	char curr;
+	int prevA = 0;
+	int prevB = 1;
+	for(i = 1; i < n; ++i){
+		curr = str[i];
+		switch(curr){
+			case 'a':
+				pGap[i] = i - prevA; 
+				prevA = i;
+				pClass[i] = 0;
+				if(pStart[i] == -1){
+					pStart[0] = i;
+				}
+				pEnd[0] = i;
+				pSize[0] += 1;	
+				break;
+			case 'b':
+			    pGap[i] = i - prevB; 
+				prevB = i;	
+				pClass[i] = 1;
+				if(pStart[1] == -1){
+					pStart[1] = i;
+				}
+				pEnd[1] = i;
+				pSize[1] += 1;
+				break;
+			default:
+				//to handle
+				break;
+		}		
 	}
 	
 
@@ -54,6 +61,7 @@ void init(char str[]){
 	pStart = pClass + n;
 	pEnd = pStart + n;
 	pSize = pEnd + n;
+	pGap = pSize + n;
 	for(i = 0; i < n; ++i){
 		pClass[i] = -1;
 		pStart[i] = -1;
@@ -64,9 +72,8 @@ void init(char str[]){
 
 int main (int argc, char * argv[])
 {
-	printf("the string is: %s\n", argv[1]);
 	init(argv[1]);
-	firstRun(argv[1]);
+	rep(argv[1]);
 	printMemory();
 	
 }
