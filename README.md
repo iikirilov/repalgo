@@ -6,9 +6,13 @@ Crochemore's algorithm computes for a word _X_ in the set _A*_, where _A_ is the
 The set of free monoinoids represents all the possible combination of letters from the alphabet A.
 This implementation currently looks at finding the set of repetition of a string.
 ### How to use:
+#### Serial implementation:
 * clone repo
 * go to /src dir
-* gcc-6 -o repalgo repalgo.c
-* ./repalgo [a-b]+ 
-
-(Currently only works with A = {a,b}, and no useful output)
+* gcc-6 -o serep serep.c
+* ./serep *input* 
+#### Parallel implementation:
+* clone repo
+* go to /src dir
+* gcc-6 -o prep prep.c
+* ./prep *input* 
